@@ -139,4 +139,4 @@ curdoc().add_root(layout)
 # Save file
 #output_file('election_violence_map.html')
 
-show(layout)
+#show(layout)
