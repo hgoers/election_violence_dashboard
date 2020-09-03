@@ -3,7 +3,7 @@
 """
 Created on Wed Sep  2 11:17:15 2020
 
-@author: hgoers
+@author: declan
 """
 
 # Import libraries
@@ -28,7 +28,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN_Dashboa
 df = df.set_index('Unnamed: 0')
 
 # Read in with REIGN data, merge with df
-reign = pd.read_csv('REIGN_2020_8.csv')[['country', 'leader', 'year', 'month', 'tenure_months', 'government', 'anticipation']]
+reign = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN.github.io/gh-pages/data_sets/REIGN_2020_9.csv')[['country', 'leader', 'year', 'month', 'tenure_months', 'government', 'anticipation']]
 df = pd.merge(reign, df, on=['country', 'year', 'month'], how='left')
 df = df[df['year']==2018]
 
@@ -44,9 +44,9 @@ gdf.columns = ['country', 'stateabb', 'geometry']
 datem = datetime.now().month
 
 # Create a function the returns json_data for the month selected by the user
-def json_data(selectedMonth):
+def json_data(selectedMonth):    
     mth = selectedMonth
-    
+
     # Pull selected month from data
     df_mth = df[df['month'] == mth]
     
@@ -62,8 +62,8 @@ def json_data(selectedMonth):
 
 # Define the callback function: update_plot
 def update_plot(attr, old, new):
-    # The input yr is the year selected from the slider
-    mth = slider.value
+    # The input mth is the month selected from the slider
+    mth = slider.value + datem
     new_data = json_data(mth)
     
     # Update the plot based on the changed inputs
@@ -88,7 +88,7 @@ def make_plot(field_name):
 
     # Create figure object
     p = figure(title = 'Forecasted risk of election violence', plot_height = 500, 
-               plot_width = 1000, toolbar_location = None, tools = [hover])
+               plot_width = 1000, toolbar_location = 'above')
     p.xgrid.grid_line_color = None
     p.ygrid.grid_line_color = None
     p.axis.visible = False
@@ -111,7 +111,7 @@ geosource = GeoJSONDataSource(geojson = json_data(datem))
 input_field = 'logpredict'
 
 # Define a sequential multi-hue color palette
-palette = brewer['Blues'][5]
+palette = brewer['Blues'][7]
 
 # Reverse color order so that dark blue is highest probability of violence
 palette = palette[::-1]
@@ -128,7 +128,7 @@ hover = HoverTool(tooltips = [('Country','@country'),
 p = make_plot(input_field)
 
 # Make a slider object: slider 
-slider = Slider(title = 'Month', start = datem, end = 12, step = 1, value = datem)
+slider = Slider(title = 'Months ahead', start = 1, end = 12, step = 1, value = 1)
 slider.on_change('value', update_plot)
 
 # Make a column layout of widgetbox(slider) and plot, and add it to the current document
@@ -138,5 +138,4 @@ curdoc().add_root(layout)
 
 # Save file
 #output_file('election_violence_map.html')
-
 #show(layout)
