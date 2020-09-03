@@ -3,8 +3,3 @@ pandas
 numpy
 geopandas
 bokeh
-MarkupSafe
-PyYAML
-requests
-scipy
-tornado
