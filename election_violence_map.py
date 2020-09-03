@@ -3,7 +3,7 @@
 """
 Created on Wed Sep  2 11:17:15 2020
 
-@author: declan
+@author: hgoers
 """
 
 # Import libraries
@@ -88,7 +88,7 @@ def make_plot(field_name):
 
     # Create figure object
     p = figure(title = 'Forecasted risk of election violence', plot_height = 500, 
-               plot_width = 1000, toolbar_location = 'above')
+               plot_width = 1000, toolbar_location = 'above', tools = 'save')
     p.xgrid.grid_line_color = None
     p.ygrid.grid_line_color = None
     p.axis.visible = False
