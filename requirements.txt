@@ -3,7 +3,6 @@ pandas
 numpy
 geopandas
 bokeh
-Jinja
 MarkupSafe
 PyYAML
 requests
