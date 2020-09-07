@@ -112,5 +112,7 @@ p.add_tools(hover)
 # Specify figure layout
 p.add_layout(color_bar, 'right')
 
+curdoc().add_root(p)
+
 # Display figure
-show(p)
+#show(p)
