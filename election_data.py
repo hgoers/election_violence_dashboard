@@ -8,11 +8,10 @@ Created on Wed Sep 16 15:15:27 2020
 
 # Import libraries
 import pandas as pd
+from clean_names import *
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-
-from datetime import date
 
 # Read in ELVIS data
 df_elvis = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN_Dashboard/dd4b14f8172651a720f686b0f1bfbc3cc3a777c3/elvis_master_sept2019_final.csv')
@@ -32,7 +31,9 @@ df_dates = pd.read_csv('https://raw.githubusercontent.com/hgoers/election_dates_
 df_dates = df_dates[df_dates['date']!='None']
 df_dates['date'] = pd.to_datetime(df_dates['date'])
 
-df_dates_update = df_dates[df_dates['date']>date.today()]
+# Clean country names
+df_dates['country'] = clean_names(df_dates['country'])
+df_elvis['country'] = clean_names(df_elvis['country'])
 
 # Set up the data for models
 X = df_elvis[['regimetenure', 'pcgdp', 'growth', 'logIMR', 'lnpop2', 'SPI', 
@@ -49,4 +50,12 @@ log_reg.fit(X_train, y_train)
 # Predict the probability of violence
 df_elvis['pred_vio'] = log_reg.predict_proba(X)[:,1]
 
-# Make inforamed dummy data
+# Make informed dummy data
+df_elvis_latest = df_elvis.sort_values(by=['dates'], ascending=False).drop_duplicates(subset=['country'])
+df_dates_update = df_dates[df_dates['date']>=pd.to_datetime('today')].drop_duplicates()
+
+df = pd.merge(df_dates_update, df_elvis_latest, on='country', how='left')
+
+# Save to csv
+df.to_csv('upcoming_election_vio.csv', index=False)
+
