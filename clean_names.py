@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """
 Created on Thu Sep 17 17:27:33 2020
-
 @author: hgoer
 """
 def clean_names(df):        
@@ -40,7 +38,8 @@ def clean_names(df):
                   'Turkish Republic of Northern Cyprus (TRNC)':'Northern Cyprus',
                   'Democratic Republic of the Congo':'DRC',
                   'Democratic Republic of Congo':'DRC',
-                  'Hellenic Republic':'Greece'}
+                  'Hellenic Republic':'Greece',
+                  'USA':'United States of America'}
     df = df.replace(clean_dict)
 
     # Remove common formal names
