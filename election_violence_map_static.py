@@ -32,7 +32,7 @@ df['year'] = df['date'].dt.year
 df['date'] = df['date'].dt.strftime('%Y-%m-%d')
 
 # Read in REIGN data
-reign = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN.github.io/gh-pages/data_sets/REIGN_2020_9.csv')[['country', 'leader', 'year', 'month', 'tenure_months', 'government', 'anticipation']]
+reign = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN.github.io/gh-pages/data_sets/REIGN_2020_10.csv')[['country', 'leader', 'year', 'month', 'tenure_months', 'government', 'anticipation']]
 reign = reign[reign['year']>2019]
 
 # Read in map data
