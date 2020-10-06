@@ -28,7 +28,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN_Dashboa
 df = df.set_index('Unnamed: 0')
 
 # Read in with REIGN data, merge with df
-reign = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN.github.io/gh-pages/data_sets/REIGN_2020_9.csv')[['country', 'leader', 'year', 'month', 'tenure_months', 'government', 'anticipation']]
+reign = pd.read_csv('https://raw.githubusercontent.com/OEFDataScience/REIGN.github.io/gh-pages/data_sets/REIGN_2020_10.csv')[['country', 'leader', 'year', 'month', 'tenure_months', 'government', 'anticipation']]
 df = pd.merge(reign, df, on=['country', 'year', 'month'], how='left')
 df = df[df['year']==2018]
 
